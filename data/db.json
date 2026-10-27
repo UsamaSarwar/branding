@@ -2,7 +2,7 @@
   "eyebrow": "Helping start-up founders",
   "title": "Turn ideas into production-ready apps within 30 days",
   "subtitle": "using Google’s Flutter & Next.js Technologies",
-  "theme": "light",
+  "theme": "dark",
   "dpPath": "/api/assets/dp.png?t=1793122504729",
   "dpOriginalPath": "/api/assets/dp-original.png?t=1793122504729",
   "contact": {
@@ -38,5 +38,5 @@
       }
     ]
   },
-  "updatedAt": "2026-10-27T23:43:02.579Z"
+  "updatedAt": "2026-10-27T23:49:07.783Z"
 }

@@ -87,6 +87,15 @@ function desktopContainsMobile(): Pick<
   };
 }
 
+/**
+ * Cover export sizes = each platform’s recommended upload resolution.
+ * Uploading larger usually gets downscaled; these match official / Help Center
+ * targets so PNGs stay 1:1 with what the platform stores and serves.
+ * - LinkedIn profile: 1584×396 (linkedin.com/help)
+ * - X header: 1500×500 (X Help)
+ * - Facebook Page cover: 1640×624 (2× of 820×312 desktop display — HD/retina tip)
+ * - YouTube channel art: 2560×1440 recommended, ≤6MB (YouTube API / Help)
+ */
 export const COVER_PLATFORMS: CoverPlatform[] = [
   {
     id: "linkedin",
@@ -143,8 +152,9 @@ export const COVER_PLATFORMS: CoverPlatform[] = [
     id: "facebook",
     name: "Facebook",
     kind: "cover",
-    width: 820,
-    height: 312,
+    // 2× desktop display (820×312) so uploads stay sharp after Facebook recompresses
+    width: 1640,
+    height: 624,
     avatar: {
       shape: "circle",
       mobile: {

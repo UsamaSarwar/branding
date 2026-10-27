@@ -35,21 +35,30 @@ async function nodeToPng(
   width: number,
   height: number,
 ): Promise<string> {
+  // pixelRatio 1 at the platform’s official upload size = sharp 1:1 PNG.
+  // Higher ratios produce oversized files that platforms typically downscale.
   return toPng(node, {
     width,
     height,
     pixelRatio: 1,
+    quality: 1,
     cacheBust: true,
     style: {
       transform: "scale(1)",
       transformOrigin: "top left",
       width: `${width}px`,
       height: `${height}px`,
+      left: "0",
+      top: "0",
+      margin: "0",
     },
     onclone: (_doc, cloned) => {
-      if (cloned instanceof HTMLElement) {
-        applyCoverExportBackground(cloned);
-      }
+      if (!(cloned instanceof HTMLElement)) return;
+      applyCoverExportBackground(cloned);
+      cloned.style.transform = "scale(1)";
+      cloned.style.transformOrigin = "top left";
+      cloned.style.width = `${width}px`;
+      cloned.style.height = `${height}px`;
     },
   });
 }
@@ -76,8 +85,12 @@ export async function exportBrandZip(options: {
   for (const platform of COVER_PLATFORMS) {
     const node = options.coverNodes[platform.id];
     if (!node) continue;
-    const dataUrl = await nodeToPng(node, platform.width, platform.height);
-    covers.file(`${platform.id}-cover.png`, dataUrlToBlob(dataUrl));
+    const { width, height } = platform;
+    const dataUrl = await nodeToPng(node, width, height);
+    covers.file(
+      `${platform.id}-cover-${width}x${height}.png`,
+      dataUrlToBlob(dataUrl),
+    );
   }
 
   if (options.includeDp && options.dpNode) {

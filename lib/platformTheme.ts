@@ -226,7 +226,7 @@ export function platformGridBackground(
   chrome?: PlatformChrome,
   opts?: { strokePx?: number },
 ): CSSProperties {
-  // Facebook quieter, YouTube stronger, others mid — all readable on mobile.
+  // Facebook quieter, YouTube slightly above mid (not dominant), others mid.
   const alpha =
     chrome === "facebook"
       ? theme === "dark"
@@ -234,8 +234,8 @@ export function platformGridBackground(
         : 0.1
       : chrome === "youtube"
         ? theme === "dark"
-          ? 0.4
-          : 0.28
+          ? 0.2
+          : 0.12
         : theme === "dark"
           ? 0.26
           : 0.16;
@@ -250,13 +250,13 @@ export function platformGridBackground(
       : cellSize === "avatar"
         ? 10
         : chrome === "youtube"
-          ? 40
+          ? 52
           : 48;
 
   // Strong at center-top, fade downward. YouTube safe band sits mid-canvas (~38%).
   const fadeTop = chrome === "youtube" ? "40%" : "8%";
   const fadeBottom = chrome === "facebook" ? 90 : 92;
-  const fadeRadial = chrome === "facebook" ? 70 : chrome === "youtube" ? 78 : 72;
+  const fadeRadial = chrome === "facebook" ? 70 : chrome === "youtube" ? 72 : 72;
   // -3px so the first horizontal line isn’t flush with the banner edge
   const gridPos = "0 -3px";
 
